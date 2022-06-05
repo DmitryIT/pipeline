@@ -1,0 +1,1 @@
+Playgroung to play with generator and processor workers in Go
