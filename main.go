@@ -10,8 +10,8 @@ import (
 )
 
 const (
-	NUM_OF_GENERATORS = 5
-	NUM_OF_PROCESSORS = 3
+	NUM_OF_GENERATORS = 2
+	NUM_OF_PROCESSORS = 0
 )
 
 func main() {
