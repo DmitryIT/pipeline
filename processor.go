@@ -1,19 +1,30 @@
 package main
 
-import "github.com/DmitryIT/pipeline/figures"
+import (
+	"context"
+	"fmt"
 
-type ProcessingType string
-
-const (
-	Area      ProcessingType = "area"
-	Perimeter ProcessingType = "perimeter"
+	"github.com/DmitryIT/pipeline/figures"
+	"github.com/segmentio/ksuid"
 )
 
-func ProcessFigure(processType ProcessingType, figure <-chan figures.Figure, resultChan chan<- float64) {
-	switch processType {
-	case Area:
-		resultChan <- (<-figure).Area()
-	case Perimeter:
-		resultChan <- (<-figure).Perimeter()
+func ProcessFigure(ctx context.Context, processType figures.ProcessingType, figure <-chan figures.Figure, resultChan chan<- float64) {
+	id := ksuid.New()
+	fmt.Printf("Processor %s started\n", id.String())
+
+	for {
+		select {
+		case <-ctx.Done():
+			fmt.Printf("Processor %s stopped\n", id.String())
+			return
+		default:
+			switch processType {
+			case figures.Area:
+				resultChan <- (<-figure).Area()
+			case figures.Perimeter:
+				resultChan <- (<-figure).Perimeter()
+			}
+			Delay()
+		}
 	}
 }
