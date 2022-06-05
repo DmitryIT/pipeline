@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"github.com/DmitryIT/pipeline/figures"
+	"github.com/DmitryIT/pipeline/metrics"
 	"github.com/segmentio/ksuid"
 )
 
@@ -18,11 +19,22 @@ func ProcessFigure(ctx context.Context, processType figures.ProcessingType, figu
 			fmt.Printf("Processor %s stopped\n", id.String())
 			return
 		default:
+			f := <-figure
 			switch processType {
 			case figures.Area:
-				resultChan <- (<-figure).Area()
+				resultChan <- f.Area()
+				metrics.FiguresProcessed.Inc()
 			case figures.Perimeter:
-				resultChan <- (<-figure).Perimeter()
+				resultChan <- f.Perimeter()
+				metrics.FiguresProcessed.Inc()
+			}
+			switch f.(type) {
+			case *figures.Triangle:
+				metrics.CurrentNumberOfTriangles.Dec()
+			case *figures.Rectangle:
+				metrics.CurrentNumberOfRectangles.Dec()
+			case *figures.Circle:
+				metrics.CurrentNumberOfCircles.Dec()
 			}
 			Delay()
 		}

@@ -10,14 +10,14 @@ import (
 )
 
 const (
-	NUM_OF_GENERATORS = 2
-	NUM_OF_PROCESSORS = 1
+	NUM_OF_GENERATORS = 100
+	NUM_OF_PROCESSORS = 20
 )
 
 func StartPipeline() {
 
-	figureChan := make(chan figures.Figure)
-	resultChan := make(chan float64)
+	figureChan := make(chan figures.Figure, NUM_OF_PROCESSORS)
+	resultChan := make(chan float64, NUM_OF_PROCESSORS)
 	ctx := context.Background()
 
 	// start up generators
