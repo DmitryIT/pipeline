@@ -1,0 +1,29 @@
+services:
+  pipeline:
+    image: my_pipeline:v1.1.0
+    ports:
+      - "8080:8080"
+    environment:
+      NUM_OF_GENERATORS: "10"
+      NUM_OF_PROCESSORS: "50"
+
+  prometheus:
+    image: prom/prometheus:v2.36.0
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml
+
+  grafana:
+    image: grafana/grafana:9.0.0-beta2
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana-data:/var/lib/grafana
+
+volumes:
+  grafana-data:
+
+
+
+
