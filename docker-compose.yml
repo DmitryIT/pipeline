@@ -1,11 +1,11 @@
 services:
   pipeline:
-    image: my_pipeline:v1.1.0
+    image: my_pipeline:v1.2.0
     ports:
       - "8080:8080"
     environment:
-      NUM_OF_GENERATORS: "10"
-      NUM_OF_PROCESSORS: "50"
+      NUM_OF_GENERATORS: "50"
+      NUM_OF_PROCESSORS: "10"
 
   prometheus:
     image: prom/prometheus:v2.36.0
