@@ -12,6 +12,8 @@ import (
 func ProcessFigure(ctx context.Context, processType figures.ProcessingType, figure <-chan figures.Figure, resultChan chan<- float64) {
 	id := ksuid.New()
 	fmt.Printf("Processor %s started\n", id.String())
+	metrics.CurrentNumberOfProcessors.Inc()
+	defer metrics.CurrentNumberOfProcessors.Dec()
 
 	for {
 		select {

@@ -12,6 +12,8 @@ import (
 func GenerateFigure(ctx context.Context, figureType figures.FigureType, figureChan chan<- figures.Figure) {
 	id := ksuid.New()
 	fmt.Printf("Generator %s started\n", id.String())
+	metrics.CurrentNumberOfGenerators.Inc()
+	defer metrics.CurrentNumberOfGenerators.Dec()
 
 	for {
 		select {

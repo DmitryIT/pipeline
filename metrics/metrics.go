@@ -24,6 +24,14 @@ var (
 		Name: "pipeline_current_number_of_circles",
 		Help: "The current number of circles",
 	})
+	CurrentNumberOfGenerators = promauto.NewGauge(prometheus.GaugeOpts{
+		Name: "pipeline_current_number_of_generators",
+		Help: "The current number of generators",
+	})
+	CurrentNumberOfProcessors = promauto.NewGauge(prometheus.GaugeOpts{
+		Name: "pipeline_current_number_of_processors",
+		Help: "The current number of processors",
+	})
 )
 
 func recordMetrics() {
