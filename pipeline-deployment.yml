@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pipeline
+spec:
+  selector:
+    matchLabels:
+      app: pipeline
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: pipeline
+    spec:
+      containers:
+        - name: my-pipeline
+          image: my_pipeline:v1.2.0
+          ports:
+            - containerPort: 8080
+
+
